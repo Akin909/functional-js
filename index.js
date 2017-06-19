@@ -26,16 +26,14 @@ const prePipe = pipe(addOne, addTwo, double);
 //DOM Manipulation =====================================
 
 function create(element) {
-  const { parent, type, children = [], css = {} } = element;
+  const { document, parent, type, children = [], css = {} } = element;
   const node = document.createElement(type);
 
   for (let key in css) {
     node.style[key] = css[key];
   }
-  children.forEach(child =>
-    domManip(Object.assign({}, child, { parent: node }))
-  );
-  return Object.assign({}, element, { node });
+  children.forEach(child => domManip(update(child, { parent: node })));
+  return update(element, { node });
 }
 
 function append({ document, parent, node, children, content, className }) {
@@ -62,6 +60,24 @@ function addContent({ node, content }) {
   if (content) {
     node.innerHTML += content;
   }
+}
+
+function createNode(type, parent, content, css, className, ...children) {
+  if (!type) {
+    return console.warn('You must declare a type');
+  }
+  if (!document) {
+    console.warn("This isn't going to work");
+  }
+  return {
+    document: document,
+    type,
+    parent,
+    content,
+    css,
+    className,
+    children
+  };
 }
 
 //CSS ===============================================
@@ -96,20 +112,10 @@ const _result = {
   fontSize: '2em',
   margin: '0.2em'
 };
-
-function createNode(type, parent, content, css, className, ...children) {
-  if (!type) {
-    return console.warn('You must declare a type');
-  }
-  return {
-    type,
-    parent,
-    content,
-    css,
-    className,
-    children
-  };
-}
+const _title = {
+  margin: '0',
+  textDecoration: 'underline'
+};
 
 function update(obj, keysToChange) {
   if (typeof keysToChange !== 'object') {
@@ -121,45 +127,60 @@ function update(obj, keysToChange) {
 //==========================================================
 // Components
 //==========================================================
+
 const content = `A functional programming playground`;
 
-const codeBlock = createNode('pre', 'results', pre, { fontSize: '1em' });
-const resultOne = createNode('p', null, pre(5), _result);
-const resultTwo = update(resultOne, { content: prePipe(5) });
-const codeBlockTwo = update(codeBlock, { content: `${prePipe}` });
-
-const title = {
-  parent: 'output',
-  className: 'title',
-  type: 'h3',
-  content: 'Compose',
-  css: {
-    margin: '0',
-    textDecoration: 'underline'
-  }
-};
-const exampleOne = {
-  parent: 'output',
-  type: 'div',
-  className: 'results',
-  children: [title, codeBlock, resultOne]
-};
+const title = createNode('h3', 'output', 'Compose', _title);
 
 const secondTitle = update(title, { content: 'Pipe' });
+
+const codeBlock = createNode('pre', 'results', pre, { fontSize: '1em' });
+
+const codeBlockTwo = update(codeBlock, { content: prePipe });
+
+const resultOne = createNode('p', 'output', pre(5), _result);
+
+const resultTwo = update(resultOne, { content: prePipe(5) });
+
+const showup = createNode('div', 'output', content, _showup);
+
+const exampleOne = createNode(
+  'div',
+  'output',
+  '',
+  {},
+  'results',
+  title,
+  codeBlock,
+  resultOne
+);
+
 const exampleTwo = update(exampleOne, {
   children: [secondTitle, codeBlockTwo, resultTwo]
 });
 
-const showup = createNode('div', 'output', content, _showup);
+const output = createNode(
+  'div',
+  document,
+  `<p>An experiment into DOM manipulation using functional programming</p>`,
+  _output,
+  'output',
+  showup,
+  exampleOne,
+  exampleTwo
+);
 
-const output = {
-  document: document,
-  parent: document,
-  type: 'div',
-  className: 'output',
-  css: _output,
-  children: [showup, exampleOne, exampleTwo]
-};
+/* Alternate syntax for node creation
+ *const output = {
+ *  document: document,
+ *  parent: document,
+ *  type: 'div',
+ *  className: 'output',
+ *  css: _output,
+ *  children: [showup, exampleOne, exampleTwo]
+ *};
+ */
+
 //INIT APP =================================================
 
 const domManip = compose(addContent, append, create);
