@@ -88,7 +88,8 @@ const _output = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  boxShadow: '-1.5px 1.5px 0 grey, 2px 2px 0 grey'
+  boxShadow: '-1.5px 1.5px 0 grey, 2px 2px 0 grey',
+  padding: '1em'
 };
 
 const _result = {
@@ -144,8 +145,8 @@ const exampleOne = {
   children: [title, codeBlock, resultOne]
 };
 
-const secondTitle = Object.assign({}, title, { content: 'Pipe' });
-const exampleTwo = Object.assign({}, exampleOne, {
+const secondTitle = update(title, { content: 'Pipe' });
+const exampleTwo = update(exampleOne, {
   children: [secondTitle, codeBlockTwo, resultTwo]
 });
 

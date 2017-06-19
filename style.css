@@ -12,13 +12,8 @@ body, html {
 }
 
 
-.result {
-    font-size: 2em;
-    margin: 0.2em;
-}
-
 
 .page-title {
-    color: tomato;
+    color: skyblue;
     text-shadow: -1px 1px 0px grey;
 }
