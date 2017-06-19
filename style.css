@@ -11,41 +11,14 @@ body, html {
     background-color: whitesmoke;
 }
 
-.output {
-    width: 80%;
-    height: auto;
-    background-color: palevioletred;
-    display: flex;
-    color:white;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: -1.5px 1.5px 0 grey,
-    -2px 2px 0 grey;
-}
 
-.code {
-    font-size: 1em;
-}
 .result {
     font-size: 2em;
     margin: 0.2em;
 }
 
-.title {
-    margin: 0;
-    text-decoration: underline;
-}
-.showup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    align-content: center;
-    background-color: whitesmoke;
-    margin: 0.5em;
-    width: 70%;
-    height: 5em;
-    color: black;
+
+.page-title {
+    color: tomato;
+    text-shadow: -1px 1px 0px grey;
 }
