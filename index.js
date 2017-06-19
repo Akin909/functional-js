@@ -22,37 +22,58 @@ const pre = compose(addOne, addTwo, double);
 const prePipe = pipe(addOne, addTwo, double);
 console.log('pre', pre(5));
 
-function create({ type, className, content }) {
-  return {
-    node: document.createElement(type),
-    className,
-    content
-  };
+function create(element) {
+  const { parent, type, children = [] } = element;
+  children.forEach(child => domManip(child));
+  return Object.assign(element, { node: document.createElement(type) });
 }
 
-function append({ node, content, className }) {
+function append({ parent, node, childNodes, content, className }) {
   if (className) {
     node.classList.add(className);
   }
-  output.appendChild(node);
+  parent.appendChild(node);
   return {
     content,
     node
   };
 }
 
-function addContent({ node, content }) {
+function addContent({ node, childNodes, content }) {
   node.innerHTML += content;
 }
 
 const content = `A functional programming playground`;
+const resultOne = `<p class="result">${pre(5)}</p>`;
+const resultTwo = `<p class="result">${prePipe(5)}</p>`;
+const codeBlock = `<pre class="code">${pre}</pre>`;
+const codeBlockTwo = `<pre class="code">${prePipe}</pre>`;
+
+const title = {
+  parent: output,
+  className: 'title',
+  type: 'h3',
+  content: 'Compose'
+};
+const exampleOne = {
+  parent: output,
+  type: 'div',
+  className: 'results',
+  children: [title],
+  content: [codeBlock, resultOne]
+};
+
+const secondTitle = Object.assign({}, title, { content: 'Pipe' });
+const exampleTwo = Object.assign({}, exampleOne, {
+  content: [codeBlockTwo, resultTwo],
+  children: [secondTitle]
+});
 
 const domManip = compose(addContent, append, create);
-domManip({ type: 'div', className: 'showup', content });
-
-output.innerHTML += `<h3 class="title">Compose</h3>
-                      <pre class="code">${pre}</pre>
-                      <p class="result">${pre(5)}</p>`;
-output.innerHTML += `<h3 class="title">Pipe</h3>
-                      <pre class="code">${prePipe}</pre>
-                      <p class="result">${prePipe(5)}</p>`;
+domManip({
+  parent: output,
+  type: 'div',
+  className: 'showup',
+  content,
+  children: [exampleOne, exampleTwo]
+});
