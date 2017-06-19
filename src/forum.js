@@ -15,6 +15,10 @@ const _submitBtn = {
   border: 'none'
 };
 
+const handler = () => {
+  
+};
+
 const chatInput = createNode(
   {
     element: 'input',
@@ -27,7 +31,7 @@ const chatInput = createNode(
 const chatSubmit = createNode(
   { element: 'input', attributes: { type: 'submit' } },
   '',
-  'Submit',
+  { handler, type: 'click', text: 'Submit' },
   _submitBtn
 );
 export const chatInputContainer = createNode(

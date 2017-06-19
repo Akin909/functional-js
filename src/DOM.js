@@ -3,6 +3,7 @@ import { compose } from './utils.js';
 
 export function create(element) {
   const { document, parent, type, children = [], css = {} } = element;
+  console.log('document', document);
   const node = document.createElement(type);
 
   for (let key in css) {
@@ -18,15 +19,13 @@ export function append({
   node,
   children,
   content,
-  attributes
-  //className
+  attributes,
+  className
 }) {
-  //if (className) {
-  //node.classList.add(className);
-  //}
-  if (attributes) {
-    addAttribute(node, attributes);
+  if (className) {
+    node.classList.add(className);
   }
+  addAttribute(node, attributes);
   if (typeof parent !== 'string') {
     if (parent === document) {
       parent.body.appendChild(node);
@@ -44,8 +43,13 @@ export function append({
 }
 
 export function addContent({ node, content }) {
-  if (content) {
+  if (content && typeof content !== 'object') {
     node.innerHTML += content;
+  } else if (typeof content === 'object') {
+    if (content.text) {
+      node.innerHTML += content.text;
+    }
+    addListener(node, content.handler, content.type);
   }
 }
 
@@ -73,7 +77,6 @@ export function createNode(
     typeString = type.element;
   }
 
-  console.log('type', type);
   return {
     document: document,
     type: typeString || type,
@@ -81,7 +84,7 @@ export function createNode(
     parent,
     content,
     css,
-    //className,
+    //className
     children
   };
 }
@@ -91,6 +94,11 @@ export function update(obj, keysToChange) {
     return console.warn('Second argument should be an object');
   }
   return Object.assign({}, obj, keysToChange);
+}
+
+//IMPURE =============================================
+function addListener(node, fn, type) {
+  node.addEventListener(type, fn);
 }
 
 export const domManip = compose(addContent, append, create);
