@@ -8,7 +8,7 @@ import {
   createNode,
   append
 } from './DOM.js';
-import { chatInputContainer } from './forum.js';
+import { forumContainer } from './forum.js';
 //Functional JS
 
 //Examples =============================================
@@ -86,4 +86,4 @@ const output = createNode(
 
 //INIT APP =================================================
 //domManip(output);
-domManip(chatInputContainer);
+domManip(forumContainer);

@@ -3,7 +3,6 @@ import { compose } from './utils.js';
 
 export function create(element) {
   const { document, parent, type, children = [], css = {} } = element;
-  console.log('document', document);
   const node = document.createElement(type);
 
   for (let key in css) {
@@ -33,13 +32,19 @@ export function append({
       parent.appendChild(node);
     }
   } else {
-    document.querySelector(`.${parent}`) ||
-      document.querySelector(`#${parent}`).appendChild(node);
+    findElement(parent, document).appendChild(node);
   }
   return {
     content,
     node
   };
+}
+
+export function findElement(element, document) {
+  return (
+    document.querySelector(`.${element}`) ||
+    document.querySelector(`#${element}`)
+  );
 }
 
 export function addContent({ node, content }) {
