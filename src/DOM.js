@@ -71,6 +71,25 @@ export function createNode(
   css,
   /* className,*/ ...children
 ) {
+  return checkType({
+    document: document,
+    type,
+    parent,
+    content,
+    css,
+    children
+  });
+}
+
+function checkType({
+  document,
+  type,
+  attributes,
+  parent,
+  content,
+  css,
+  children
+}) {
   let typeString;
   if (!type) {
     return console.warn('You must declare a type');
@@ -112,4 +131,4 @@ export function empty(node) {
   }
 }
 
-export const manipulateDom = compose(addContent, append, create);
+export const manipulateDom = compose(addContent, append, create, checkType);

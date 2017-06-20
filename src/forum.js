@@ -50,21 +50,26 @@ const handler = () => {
   setState({ input, posts: [{ text: input }] });
 };
 
-const chatInput = createNode(
-  {
+const chatInput = {
+  document: document,
+  type: {
     element: 'input',
-    attributes: { placeholder: 'Type in your Message', id: 'forum-input' }
+    attributes: {
+      placeholder: 'Type in your Message',
+      id: 'forum-input'
+    }
   },
-  '',
-  '',
-  _chatInput
-);
-const chatSubmit = createNode(
-  { element: 'input', attributes: { type: 'submit' } },
-  '',
-  { handler, type: 'click', text: 'Submit' },
-  _submitBtn
-);
+  css: _chatInput
+};
+const chatSubmit = {
+  document: document,
+  type: {
+    element: 'input',
+    attributes: { type: 'submit' }
+  },
+  content: { handler, type: 'click', text: 'Submit' },
+  css: _submitBtn
+};
 const chatInputContainer = {
   type: 'div',
   document: document,
