@@ -36,7 +36,8 @@ export const _title = {
 };
 
 export const _chatInput = {
-  width: '90%'
+  width: '90%',
+  padding: '0 1em'
 };
 
 export const _chat = {

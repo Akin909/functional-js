@@ -10,10 +10,3 @@ body, html {
     font-family: Helvetica;
     background-color: whitesmoke;
 }
-
-
-
-.page-title {
-    color: skyblue;
-    text-shadow: -1px 1px 0px grey;
-}

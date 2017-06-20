@@ -11,6 +11,10 @@ import { setState, state } from './state.js';
 
 import { _chat, _chatInput } from './css.js';
 
+//===========================================================
+//CSS
+//===========================================================
+
 const _submitBtn = {
   backgroundColor: 'skyblue',
   width: '10%',
@@ -44,12 +48,24 @@ const _post = {
   alignItems: 'center',
   justifyContent: 'center'
 };
+const _title = {
+  fontSize: '1.5em',
+  color: 'skyblue',
+  textShadow: '-1px 1px 0px grey',
+  textAlign: 'center'
+};
 
+//===========================================================
+// Handlers
+//===========================================================
 const handler = () => {
   const input = findElement('forum-input', document).value;
   setState({ input, posts: [{ text: input }] });
 };
 
+//===========================================================
+// Components
+//===========================================================
 const chatInput = {
   document: document,
   type: {
@@ -87,10 +103,18 @@ const messages = {
   children: [...posts]
 };
 
+const title = {
+  type: 'h1',
+  document: document,
+  parent: document,
+  content: 'Functional Forum',
+  css: _title
+};
+
 export const forumContainer = {
   type: 'div',
   document: document, //need to pass in document to avoid sideeffect
   parent: document,
   css: _Container,
-  children: [messages, chatInputContainer]
+  children: [title, messages, chatInputContainer]
 };

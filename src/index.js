@@ -87,12 +87,11 @@ const output = createNode(
 
 //INIT APP =================================================
 //manipulateDom(output);
-//manipulateDom(forumContainer);
 export function render(state) {
   if (state) {
     empty(document.body);
   }
-  console.log('state', state);
+  //console.log('state', state);
   manipulateDom(forumContainer);
 }
 
