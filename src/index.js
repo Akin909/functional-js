@@ -2,6 +2,7 @@ import { pipe, compose } from './utils.js';
 import { _showup, _output, _result, _title } from './css.js';
 import {
   domManip,
+  empty,
   create,
   addContent,
   update,
@@ -86,4 +87,13 @@ const output = createNode(
 
 //INIT APP =================================================
 //domManip(output);
-domManip(forumContainer);
+//domManip(forumContainer);
+export function render(state) {
+  if (state) {
+    empty(document.body);
+  }
+  console.log('state', state);
+  domManip(forumContainer);
+}
+
+render();

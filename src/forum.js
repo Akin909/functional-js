@@ -47,7 +47,7 @@ const _post = {
 
 const handler = () => {
   const input = findElement('forum-input', document).value;
-  setState({ input });
+  setState({ input, posts: [{ text: input }] });
 };
 
 const chatInput = createNode(
@@ -73,15 +73,9 @@ const chatInputContainer = createNode(
   chatInput,
   chatSubmit
 );
-const posts = createNode('li', 'ul', state.posts[0], _post);
+const posts = state.posts.map(post => createNode('li', 'ul', post, _post));
 
-const messages = createNode(
-  'ul',
-  document,
-  { text: 'Posts Today' },
-  _messages,
-  posts
-);
+const messages = createNode('ul', document, {}, _messages, ...posts);
 
 export const forumContainer = createNode(
   'div',

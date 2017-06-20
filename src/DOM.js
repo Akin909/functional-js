@@ -21,6 +21,7 @@ export function append({
   attributes,
   className
 }) {
+  console.log('children', children);
   if (className) {
     node.classList.add(className);
   }
@@ -104,6 +105,12 @@ export function update(obj, keysToChange) {
 //IMPURE =============================================
 function addListener(node, fn, type) {
   node.addEventListener(type, fn);
+}
+
+export function empty(node) {
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
 }
 
 export const domManip = compose(addContent, append, create);
