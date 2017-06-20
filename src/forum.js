@@ -1,5 +1,5 @@
 import {
-  domManip,
+  manipulateDom,
   findElement,
   create,
   addContent,
@@ -39,7 +39,7 @@ const _post = {
   boxShadow: '0 1px 0 grey',
   width: '80%',
   height: '10%',
-  backgroundColor: 'palevioletred',
+  backgroundColor: 'skyblue',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'
@@ -65,23 +65,27 @@ const chatSubmit = createNode(
   { handler, type: 'click', text: 'Submit' },
   _submitBtn
 );
-const chatInputContainer = createNode(
-  'div',
-  document,
-  '',
-  _chat,
-  chatInput,
-  chatSubmit
-);
+const chatInputContainer = {
+  type: 'div',
+  document: document,
+  css: _chat,
+  children: [chatInput, chatSubmit]
+};
+
 const posts = state.posts.map(post => createNode('li', 'ul', post, _post));
 
-const messages = createNode('ul', document, {}, _messages, ...posts);
+const messages = {
+  type: 'div',
+  document: document,
+  parent: document,
+  css: _messages,
+  children: [...posts]
+};
 
-export const forumContainer = createNode(
-  'div',
-  document,
-  '',
-  _Container,
-  messages,
-  chatInputContainer
-);
+export const forumContainer = {
+  type: 'div',
+  document: document, //need to pass in document to avoid sideeffect
+  parent: document,
+  css: _Container,
+  children: [messages, chatInputContainer]
+};

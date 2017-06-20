@@ -8,7 +8,7 @@ export function create(element) {
   for (let key in css) {
     node.style[key] = css[key];
   }
-  children.forEach(child => domManip(update(child, { parent: node })));
+  children.forEach(child => manipulateDom(update(child, { parent: node })));
   return update(element, { node });
 }
 
@@ -21,7 +21,6 @@ export function append({
   attributes,
   className
 }) {
-  console.log('children', children);
   if (className) {
     node.classList.add(className);
   }
@@ -113,4 +112,4 @@ export function empty(node) {
   }
 }
 
-export const domManip = compose(addContent, append, create);
+export const manipulateDom = compose(addContent, append, create);
