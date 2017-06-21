@@ -7,7 +7,8 @@ import {
   addContent,
   update,
   createNode,
-  append
+  append,
+  updateDom
 } from './DOM.js';
 import { forumContainer } from './forum.js';
 //Functional JS
@@ -87,13 +88,20 @@ const output = createNode(
 
 //INIT APP =================================================
 //manipulateDom(output);
-//manipulateDom(forumContainer);
 export function render(state) {
   if (state) {
     empty(document.body);
   }
-  console.log('state', state);
-  manipulateDom(forumContainer);
+  //console.log('state', state);
+  const tree = manipulateDom(forumContainer);
+  console.log('tree', tree);
+  //updateDom({
+  //parent: document.body,
+  //element: tree,
+  //newNode: tree.node,
+  //oldNode: null,
+  //index: 0
+  //});
 }
 
 render();

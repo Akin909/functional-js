@@ -1,15 +1,6 @@
-import {
-  manipulateDom,
-  findElement,
-  create,
-  addContent,
-  update,
-  createNode,
-  append
-} from './DOM.js';
+import { createNode } from './DOM.js';
 import { setState, state } from './state.js';
-
-import { _chat, _chatInput } from './css.js';
+import { _pageTitle, _chat, _chatInput } from './css.js';
 
 const _submitBtn = {
   backgroundColor: 'skyblue',
@@ -87,10 +78,18 @@ const messages = {
   children: [...posts]
 };
 
+const pageTitle = {
+  type: 'h1',
+  content: 'Functional Forum',
+  document: document,
+  parent: document,
+  css: _pageTitle
+};
+
 export const forumContainer = {
   type: 'div',
   document: document, //need to pass in document to avoid sideeffect
   parent: document,
   css: _Container,
-  children: [messages, chatInputContainer]
+  children: [pageTitle, messages, chatInputContainer]
 };

@@ -49,3 +49,9 @@ export const _chat = {
   display: 'flex',
   alignItems: 'space-between'
 };
+
+export const _pageTitle = {
+  color: 'skyblue',
+  textShadow: '-1px 1px 0px grey',
+  textAlign: 'center'
+};
